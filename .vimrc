@@ -1,5 +1,5 @@
-set nocompatible
 filetype off
+let g:python_host_prog='/usr/local/bin/python'
 
 " --------------- Plugins installed ------------------------------------------- "
 call plug#begin('~/.vim/plugged')
@@ -7,7 +7,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/syntastic'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'andreamichi/base16-vim'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tomtom/tcomment_vim'
@@ -16,8 +15,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'plasticboy/vim-markdown'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'kien/ctrlp.vim'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'kassio/neoterm'
 
 call plug#end()
 
@@ -26,6 +25,7 @@ filetype plugin indent on
 
 set background=dark
 colorscheme default
+
 
 " --------------- Indentation and Formatting ----------------------------------
 
@@ -48,6 +48,7 @@ autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType java       setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType go         setlocal noexpandtab
 augroup END
+
 
 " --------------- General Settings --------------------------------------------
 
@@ -73,6 +74,22 @@ set splitright      " Open vertical split on the right.
 
 let mapleader=","   " Change the mapleader from '\' to ','.
 
+
+" --------------- Navigation Settings ------------------------------------------
+
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+" If the buffer is a terminal default to Insert mode.
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+
+
 " --------------- Searching Settings ------------------------------------------
 
 " Searching is not case sensitive when the pattern contains only lower
@@ -84,8 +101,8 @@ set incsearch       " Show where the pattern, while typying a search command.
 set smartcase       " Override 'ignorecase' for upper case search patterns.
 set ignorecase      " Ignore case of normal letters.
 
-" Use <Leader>c to clear the highlighting of :set hlsearch.
-nnoremap <silent> <Leader>c :nohlsearch<CR>
+" Use <C-l> to clear the highlighting of :set hlsearch.
+nnoremap <silent> <C-l> :nohlsearch<CR>
 
 
 " --------------- Copy/Paste Settings ------------------------------------------
@@ -102,23 +119,14 @@ nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 
+
 " --------------- Miscellaneous Settings -------------------------------------
 
 " Easier access to the <ESC>.
 inoremap jk <ESC>
 
-" Mapping to space to fold toggle.
-nnoremap <Space> za
-
-" Open NerdTree with <Leader-f>.
-map <Leader>f :NERDTreeToggle<CR>
-
 " Use <C-n> to move to the next buffer.
 nnoremap <silent> <C-n> :bn<CR>
-
-" Close automatically NERDTree if it's the only window open.
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType")
-  \ && b:NERDTreeType == "primary") | q | endif
 
 " CtrlP working directory is the nearest ancestor (directory with .git) or
 " the current working directory.
@@ -137,6 +145,7 @@ set completeopt-=preview
 
 " Close preview window when done.
 autocmd CompleteDone * pclose
+
 
 " --------------- Cscope and Ctags Settings -----------------------------------
 
@@ -170,12 +179,16 @@ autocmd FileType gitcommit setlocal textwidth=72
 autocmd FileType gitcommit setlocal spell
 augroup END
 
+
 " --------------- Markdown Settings -------------------------------------------
 
 " Markdown olding method.
 autocmd BufEnter *.md       setlocal foldexpr=MarkdownFolding()
 
 let g:vim_markdown_folding_disabled=1
+
+" Mapping to space to fold toggle.
+nnoremap <Space> za
 
 function! MarkdownFolding()
   let h = matchstr(getline(v:lnum), '^#\+')
@@ -186,5 +199,5 @@ function! MarkdownFolding()
   endif
 endfunction
 
-" Do not wrap text with markdown and don't write more than 80 chars width.
+" Wrap text with markdown and don't write more than 80 chars width.
 autocmd BufRead,BufNewFile *.md setlocal wrap textwidth=80

@@ -1,30 +1,45 @@
 #FILE LOCATION ~/.profile
 
 #------- Editing of .dotfiles and refresh command -----------------------------
-alias aliases="vim ~/.aliases && source ~/.aliases"
-alias vimrc="vim ~/.vimrc"
-alias profile="vim ~/.profile && source ~/.profile"
-alias zshrc="vim ~/.zshrc && source ~/.zshrc"
+alias aliases="nvim ~/.aliases && source ~/.aliases"
+alias vimrc="nvim ~/.vimrc"
+alias profile="nvim ~/.profile && source ~/.profile"
+alias zshrc="nvim ~/.zshrc && source ~/.zshrc"
 alias reload="source ~/.zshrc"
 #------------------------------------------------------------------------------
 
 #------- Utilities ------------------------------------------------------------
+alias vim="nvim"
 alias brews="brew list -1"
-alias git-init="git init && echo ".DS_Store" > .gitignore"
 alias maildebug="python -m smtpd -n -c DebuggingServer localhost:1025"
 alias serverdebug="python -m SimpleHTTPServer"
+alias nat="cd ~/Projects/Nat"
 #------------------------------------------------------------------------------
 
 #------- Functions ------------------------------------------------------------
-gitdoc() {
-    git clone git@gitlab.doc.ic.ac.uk:/lab1314_spring/$1_$2.git
-}
-
 trash() {
   mv $@ ~/.Trash
 }
 
-gpip(){
+gpip() {
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
+
+gpip3() {
+   PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
+}
+
+take () {
+  mkdir -p $1
+  cd $1
+}
+
+function frameworkpython {
+    if [[ ! -z "$VIRTUAL_ENV" ]]; then
+        PYTHONHOME=$VIRTUAL_ENV /usr/local/bin/python "$@"
+    else
+        /usr/local/bin/python "$@"
+    fi
+}
+
 #------------------------------------------------------------------------------
