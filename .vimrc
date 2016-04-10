@@ -1,11 +1,13 @@
 filetype off
-let g:python_host_prog='/usr/local/bin/python'
 
 " --------------- Plugins installed ------------------------------------------- "
 call plug#begin('~/.vim/plugged')
 
+" YouCompleteMe disabled by default.
+" Uncomment and run :PlugInstall to install it.
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
 Plug 'scrooloose/syntastic'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'andreamichi/base16-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -16,7 +18,11 @@ Plug 'plasticboy/vim-markdown'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'kien/ctrlp.vim'
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'kassio/neoterm'
+
+" Plugins for Neovim.
+if has('nvim')
+  Plug 'kassio/neoterm'
+endif
 
 call plug#end()
 
@@ -77,18 +83,21 @@ let mapleader=","   " Change the mapleader from '\' to ','.
 
 " --------------- Navigation Settings ------------------------------------------
 
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
+" Terminal configuration (Neovim).
+if exists(':tnoremap')
+  tnoremap <A-h> <C-\><C-n><C-w>h
+  tnoremap <A-j> <C-\><C-n><C-w>j
+  tnoremap <A-k> <C-\><C-n><C-w>k
+  tnoremap <A-l> <C-\><C-n><C-w>l
+
+  " If the buffer is a terminal default to Insert mode.
+  au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+endif
+
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
-
-" If the buffer is a terminal default to Insert mode.
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-
 
 " --------------- Searching Settings ------------------------------------------
 
@@ -108,16 +117,16 @@ nnoremap <silent> <C-l> :nohlsearch<CR>
 " --------------- Copy/Paste Settings ------------------------------------------
 
 " Copy to clipboard
-vnoremap  <leader>y  "+y
-nnoremap  <leader>Y  "+yg_
-nnoremap  <leader>y  "+y
-nnoremap  <leader>yy  "+yy
+vnoremap  <Leader>y  "+y
+nnoremap  <Leader>Y  "+yg_
+nnoremap  <Leader>y  "+y
+nnoremap  <Leader>yy  "+yy
 
 " Paste from clipboard
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-vnoremap <leader>p "+p
-vnoremap <leader>P "+P
+nnoremap <Leader>p "+p
+nnoremap <Leader>P "+P
+vnoremap <Leader>p "+p
+vnoremap <Leader>P "+P
 
 
 " --------------- Miscellaneous Settings -------------------------------------
@@ -145,24 +154,6 @@ set completeopt-=preview
 
 " Close preview window when done.
 autocmd CompleteDone * pclose
-
-
-" --------------- Cscope and Ctags Settings -----------------------------------
-
-" Set directory for tags.
-" autocmd BufRead * set tags=./tags,tags;$HOME
-
-" Load cscope database
-function! LoadCscope()
-  let db = findfile("cscope.out", ".;")
-  if (!empty(db))
-    let path = strpart(db, 0, match(db, "/cscope.out$"))
-    set nocscopeverbose " suppress 'duplicate connection' error
-    exe "cs add " . db . " " . path
-    set cscopeverbose
-  endif
-endfunction
-" au BufEnter /* call LoadCscope()
 
 
 " --------------- Git Settings ------------------------------------------------
@@ -201,3 +192,12 @@ endfunction
 
 " Wrap text with markdown and don't write more than 80 chars width.
 autocmd BufRead,BufNewFile *.md setlocal wrap textwidth=80
+
+" --------------- Eclim Settings ---------------------------------------------
+nnoremap <Leader>ji :JavaImport<CR>
+nnoremap <Leader>jr :JavaRename<CR>
+
+" --------------- Local vimrc ------------------------------------------------
+if !empty(glob("$HOME/.vimrc.local"))
+  source $HOME/.vimrc.local
+endif

@@ -1,15 +1,14 @@
 #FILE LOCATION ~/.profile
 
 #------- Editing of .dotfiles and refresh command -----------------------------
-alias aliases="nvim ~/.aliases && source ~/.aliases"
-alias vimrc="nvim ~/.vimrc"
-alias profile="nvim ~/.profile && source ~/.profile"
-alias zshrc="nvim ~/.zshrc && source ~/.zshrc"
+alias aliases="vim ~/.aliases && source ~/.aliases"
+alias vimrc="vim ~/.vimrc"
+alias profile="vim ~/.profile && source ~/.profile"
+alias zshrc="vim ~/.zshrc && source ~/.zshrc"
 alias reload="source ~/.zshrc"
 #------------------------------------------------------------------------------
 
 #------- Utilities ------------------------------------------------------------
-alias vim="nvim"
 alias brews="brew list -1"
 alias maildebug="python -m smtpd -n -c DebuggingServer localhost:1025"
 alias serverdebug="python -m SimpleHTTPServer"
@@ -21,19 +20,12 @@ trash() {
   mv $@ ~/.Trash
 }
 
-gpip() {
-   PIP_REQUIRE_VIRTUALENV="" pip "$@"
-}
-
-gpip3() {
-   PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
-}
-
 take () {
   mkdir -p $1
   cd $1
 }
 
+# Workaround for virtualenv and matplotlib.
 function frameworkpython {
     if [[ ! -z "$VIRTUAL_ENV" ]]; then
         PYTHONHOME=$VIRTUAL_ENV /usr/local/bin/python "$@"
