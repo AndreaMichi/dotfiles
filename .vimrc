@@ -18,6 +18,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'kien/ctrlp.vim'
 Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'SirVer/ultisnips'
 
 " Plugins for Neovim.
 if has('nvim')
@@ -50,7 +51,7 @@ set shiftwidth=2    " Values used by smarttab setting.
 augroup indentation
 autocmd FileType html       setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType ruby       setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType python     setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType python     setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType java       setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType go         setlocal noexpandtab
 augroup END
@@ -134,7 +135,8 @@ vnoremap <Leader>P "+P
 " Easier access to the <ESC>.
 inoremap jk <ESC>
 
-" Use <C-n> to move to the next buffer.
+" Move to back and forward through buffer.
+nnoremap <silent> <C-b> :bp<CR>
 nnoremap <silent> <C-n> :bn<CR>
 
 " CtrlP working directory is the nearest ancestor (directory with .git) or
@@ -154,6 +156,11 @@ set completeopt-=preview
 
 " Close preview window when done.
 autocmd CompleteDone * pclose
+
+" Ultisnips configuration.
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 
 
 " --------------- Git Settings ------------------------------------------------
