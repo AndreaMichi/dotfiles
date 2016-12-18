@@ -4,6 +4,7 @@
 alias aliases="vim ~/.aliases && source ~/.aliases"
 alias vimrc="vim ~/.vimrc"
 alias profile="vim ~/.profile && source ~/.profile"
+alias tmuxrc="vim ~/.tmux.conf"
 alias zshrc="vim ~/.zshrc && source ~/.zshrc"
 alias reload="source ~/.zshrc"
 #------------------------------------------------------------------------------
