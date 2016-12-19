@@ -130,8 +130,7 @@ nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
 vnoremap <Leader>p "+p
 vnoremap <Leader>P "+P
-inoremap <Leader>p <ESC>"+p
-inoremap <Leader>P <ESC>"+P
+inoremap <Leader>p <ESC>"+P
 
 
 " --------------- Miscellaneous Settings -------------------------------------
