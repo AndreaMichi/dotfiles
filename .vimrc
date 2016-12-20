@@ -49,11 +49,12 @@ set shiftwidth=2    " Values used by smarttab setting.
 
 " Default indentation and folding settings for specific languages.
 augroup indentation
-autocmd FileType html       setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType ruby       setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType python     setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType java       setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType go         setlocal noexpandtab
+  autocmd!
+  autocmd FileType html       setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType ruby       setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType python     setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType java       setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType go         setlocal noexpandtab
 augroup END
 
 
@@ -158,7 +159,10 @@ let g:ycm_add_preview_to_completeopt = 0
 set completeopt-=preview
 
 " Close preview window when done.
-autocmd CompleteDone * pclose
+augroup youcompleteme
+  autocmd!
+  autocmd CompleteDone * pclose
+augroup END
 
 " Ultisnips configuration.
 let g:UltiSnipsExpandTrigger = "<c-j>"
@@ -176,15 +180,19 @@ map <Leader>g :GitGutterToggle<CR>
 
 " Automatically wrap at 72 characters and spell check git commit messages
 augroup git
-autocmd FileType gitcommit setlocal textwidth=72
-autocmd FileType gitcommit setlocal spell
+  autocmd!
+  autocmd FileType gitcommit setlocal textwidth=72
+  autocmd FileType gitcommit setlocal spell
 augroup END
 
 
 " --------------- Markdown Settings -------------------------------------------
 
-" Markdown olding method.
-autocmd BufEnter *.md       setlocal foldexpr=MarkdownFolding()
+augroup markdown
+  autocmd!
+  autocmd BufEnter *.md       setlocal foldexpr=MarkdownFolding()
+  autocmd BufRead,BufNewFile *.md setlocal wrap textwidth=80
+augroup END
 
 let g:vim_markdown_folding_disabled=1
 
@@ -200,14 +208,15 @@ function! MarkdownFolding()
   endif
 endfunction
 
-" Wrap text with markdown and don't write more than 80 chars width.
-autocmd BufRead,BufNewFile *.md setlocal wrap textwidth=80
 
 " --------------- Eclim Settings ---------------------------------------------
-nnoremap <Leader>ji :JavaImport<CR>
-nnoremap <Leader>jr :JavaRename<CR>
+
+nnoremap <Leader>ei :JavaImport<CR>
+nnoremap <Leader>er :JavaRename<CR>
+
 
 " --------------- Local vimrc ------------------------------------------------
+
 if !empty(glob("$HOME/.vimrc.local"))
   source $HOME/.vimrc.local
 endif
