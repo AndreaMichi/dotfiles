@@ -7,18 +7,20 @@ call plug#begin('~/.vim/plugged')
 " Uncomment and run :PlugInstall to install it.
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
-Plug 'scrooloose/syntastic'
 Plug 'andreamichi/base16-vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'easymotion/vim-easymotion'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'kien/ctrlp.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'plasticboy/vim-markdown'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'SirVer/ultisnips'
+Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tomtom/tcomment_vim'
 Plug 'vim-scripts/a.vim', {'for': ['cpp', 'c'] }
-Plug 'airblade/vim-gitgutter'
-Plug 'plasticboy/vim-markdown'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'kien/ctrlp.vim'
-Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'SirVer/ultisnips'
 
 " Plugins for Neovim.
 if has('nvim')
@@ -154,6 +156,15 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
+" Open NERDTree with <Leader>t
+nnoremap <Leader>t :NERDTreeToggle<CR>
+
+" Close vim if NERDTree is the only window open
+augroup nerdtree
+  autocmd! bufenter * if (winnr("$") == 1 &&
+        \ exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
+
 " Removing YouCompleteMe preview window.
 let g:ycm_add_preview_to_completeopt = 0
 set completeopt-=preview
@@ -165,9 +176,23 @@ augroup youcompleteme
 augroup END
 
 " Ultisnips configuration.
-let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsExpandTrigger = "<c-k>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+
+
+" --------------- EasyMotion Settings -----------------------------------------
+
+" Turn on case insensitive feature.
+let g:EasyMotion_smartcase = 1
+
+" Jump anywhere with typing two characters.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Jump between lines
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map  <Leader>w <Plug>(easymotion-bd-w)
 
 
 " --------------- Git Settings ------------------------------------------------
