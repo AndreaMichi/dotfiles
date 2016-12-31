@@ -11,7 +11,7 @@ Plug 'andreamichi/base16-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'plasticboy/vim-markdown'
 Plug 'scrooloose/nerdtree'
@@ -119,8 +119,6 @@ nnoremap <silent> <C-l> :nohlsearch<CR>
 
 
 " --------------- Copy/Paste Settings ------------------------------------------
-
-set clipboard=unnamedplus
 
 " Copy to clipboard
 vnoremap  <Leader>y  "+y
