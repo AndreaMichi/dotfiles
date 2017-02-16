@@ -9,9 +9,11 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'andreamichi/base16-vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'plasticboy/vim-markdown'
 Plug 'scrooloose/nerdtree'
@@ -103,6 +105,7 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
+
 " --------------- Searching Settings ------------------------------------------
 
 " Searching is not case sensitive when the pattern contains only lower
@@ -120,13 +123,13 @@ nnoremap <silent> <C-l> :nohlsearch<CR>
 
 " --------------- Copy/Paste Settings ------------------------------------------
 
-" Copy to clipboard
+" Copy to clipboard.
 vnoremap  <Leader>y  "+y
 nnoremap  <Leader>Y  "+yg_
 nnoremap  <Leader>y  "+y
 nnoremap  <Leader>yy  "+yy
 
-" Paste from clipboard
+" Paste from clipboard.
 nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
 vnoremap <Leader>p "+p
@@ -143,6 +146,9 @@ inoremap jk <ESC>
 nnoremap <silent> <C-b> :bp<CR>
 nnoremap <silent> <C-n> :bn<CR>
 
+" FZF configuration.
+nnoremap <Leader><Leader> :GitFiles<CR>
+
 " CtrlP working directory is the nearest ancestor (directory with .git) or
 " the current working directory.
 let g:ctrlp_working_path_mode = 'ra'
@@ -154,10 +160,14 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
+let g:syntastic_always_populate_loc_list = 1
+nnoremap <Leader>mp :lprev<CR>
+nnoremap <Leader>mn :lnext<CR>
+
 " Open NERDTree with <Leader>t
 nnoremap <Leader>t :NERDTreeToggle<CR>
 
-" Close vim if NERDTree is the only window open
+" Close vim if NERDTree is the only window open.
 augroup nerdtree
   autocmd! bufenter * if (winnr("$") == 1 &&
         \ exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -178,8 +188,14 @@ let g:UltiSnipsExpandTrigger = "<c-k>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 
+" Open buffer list
+nnoremap gb :ls<CR>:buffer<Space>
+
 
 " --------------- EasyMotion Settings -----------------------------------------
+
+" Disable default mappings
+let g:EasyMotion_do_mapping = 0
 
 " Turn on case insensitive feature.
 let g:EasyMotion_smartcase = 1
@@ -187,10 +203,8 @@ let g:EasyMotion_smartcase = 1
 " Jump anywhere with typing two characters.
 nmap s <Plug>(easymotion-overwin-f2)
 
-" Jump between lines
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map  <Leader>w <Plug>(easymotion-bd-w)
+" Jump between words.
+map <Leader>w <Plug>(easymotion-bd-w)
 
 
 " --------------- Git Settings ------------------------------------------------
@@ -235,7 +249,12 @@ endfunction
 " --------------- Eclim Settings ---------------------------------------------
 
 nnoremap <Leader>ei :JavaImport<CR>
-nnoremap <Leader>er :JavaRename<CR>
+nnoremap <Leader>ea :JavaImportOrganize<CR>
+nnoremap <Leader>es :JavaSearchContext<CR>
+nnoremap <Leader>er :JavaRename 
+
+" Disable auto import of logger.
+let g:EclimLoggingDisabled = 1
 
 
 " --------------- Local vimrc ------------------------------------------------
