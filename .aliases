@@ -7,6 +7,7 @@ alias profile="vim ~/.profile && source ~/.profile"
 alias tmuxrc="vim ~/.tmux.conf"
 alias zshrc="vim ~/.zshrc && source ~/.zshrc"
 alias reload="source ~/.zshrc"
+alias i3config="vim ~/.config/i3/config"
 #------------------------------------------------------------------------------
 
 #------- Utilities ------------------------------------------------------------

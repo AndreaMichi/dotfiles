@@ -6,10 +6,12 @@ call plug#begin('~/.vim/plugged')
 " YouCompleteMe disabled by default.
 " Uncomment and run :PlugInstall to install it.
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'scrooloose/syntastic'
 
 Plug 'andreamichi/base16-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'duganchen/vim-soy'
 Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -17,12 +19,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'plasticboy/vim-markdown'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
 Plug 'SirVer/ultisnips'
 Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'vim-scripts/a.vim', {'for': ['cpp', 'c'] }
+Plug 'w0rp/ale'
 
 " Plugins for Neovim.
 if has('nvim')
@@ -66,7 +69,7 @@ augroup END
 
 set backspace=indent,eol,start " Allow backspace over everything in insert mode.
 
-set number          " Activate the number on the left.
+set number          " Add numbers to the left.
 set ruler           " Show line and column number of the cursor position.
 set showcmd         " Show partial command in the last line of the screen.
 set nostartofline   " Keep the cursor on the same column when moving.
@@ -146,6 +149,9 @@ inoremap jk <ESC>
 nnoremap <silent> <C-b> :bp<CR>
 nnoremap <silent> <C-n> :bn<CR>
 
+" Swap numbers and relative numbers.
+nnoremap <silent> <Leader>n :set relativenumber!<CR>
+
 " FZF configuration.
 nnoremap <Leader><Leader> :GitFiles<CR>
 
@@ -157,12 +163,8 @@ let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
 
 " Set clang and c++ for syntastic.
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-
-let g:syntastic_always_populate_loc_list = 1
-nnoremap <Leader>mp :lprev<CR>
-nnoremap <Leader>mn :lnext<CR>
+" let g:syntastic_cpp_compiler = 'clang++'
+" let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
 " Open NERDTree with <Leader>t
 nnoremap <Leader>t :NERDTreeToggle<CR>
@@ -213,7 +215,8 @@ map <Leader>w <Plug>(easymotion-bd-w)
 let g:gitgutter_enabled = 0
 
 " Enabled/Disabled'
-map <Leader>g :GitGutterToggle<CR>
+map <Leader>gg :GitGutterToggle<CR>
+map <Leader>gs :Gstatus<CR>
 
 " Automatically wrap at 72 characters and spell check git commit messages
 augroup git
