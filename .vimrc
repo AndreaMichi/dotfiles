@@ -10,14 +10,19 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'andreamichi/base16-vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'duganchen/vim-soy'
-Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'majutsushi/tagbar'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'plasticboy/vim-markdown'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 Plug 'tomtom/tcomment_vim'
@@ -103,10 +108,12 @@ if exists(':tnoremap')
   au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 endif
 
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 
 
 " --------------- Searching Settings ------------------------------------------
@@ -153,7 +160,14 @@ nnoremap <silent> <C-n> :bn<CR>
 nnoremap <silent> <Leader>n :set relativenumber!<CR>
 
 " FZF configuration.
-nnoremap <Leader><Leader> :GitFiles<CR>
+" nnoremap <Leader><Leader> :Files<CR>
+nnoremap <Leader><Leader> :Files<CR>
+
+nnoremap <Leader>b :Buffers<CR>
+
+let $FZF_DEFAULT_COMMAND = 'list_all_files'
+
+
 
 " CtrlP working directory is the nearest ancestor (directory with .git) or
 " the current working directory.
@@ -192,7 +206,6 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 
 " Open buffer list
 nnoremap gb :ls<CR>:buffer<Space>
-
 
 " --------------- EasyMotion Settings -----------------------------------------
 
@@ -247,17 +260,6 @@ function! MarkdownFolding()
     return ">" . len(h)
   endif
 endfunction
-
-
-" --------------- Eclim Settings ---------------------------------------------
-
-nnoremap <Leader>ei :JavaImport<CR>
-nnoremap <Leader>ea :JavaImportOrganize<CR>
-nnoremap <Leader>es :JavaSearchContext<CR>
-nnoremap <Leader>er :JavaRename 
-
-" Disable auto import of logger.
-let g:EclimLoggingDisabled = 1
 
 
 " --------------- Local vimrc ------------------------------------------------
